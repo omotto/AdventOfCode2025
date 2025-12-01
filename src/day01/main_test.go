@@ -6,28 +6,32 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestGetTotalDistance(t *testing.T) {
+func TestGetFinalNumber(t *testing.T) {
 	tcs := []struct {
 		desc        string
 		inputList   []string
 		expectedVal int
 	}{
 		{
-			desc: "expected distance 11",
+			desc: "expected final dial number 3",
 			inputList: []string{
-				"3   4",
-				"4   3",
-				"2   5",
-				"1   3",
-				"3   9",
-				"3   3",
+				"L68",
+				"L30",
+				"R48",
+				"L5",
+				"R60",
+				"L55",
+				"L1",
+				"L99",
+				"R14",
+				"L82",
 			},
-			expectedVal: 11,
+			expectedVal: 3,
 		},
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			got := getTotalDistance(tc.inputList)
+			got := getFinalNumber(tc.inputList)
 			if diff := cmp.Diff(tc.expectedVal, got); diff != "" {
 				t.Errorf("sum has diff %s", diff)
 			}
@@ -35,28 +39,32 @@ func TestGetTotalDistance(t *testing.T) {
 	}
 }
 
-func TestGetTotalSimilarityScore(t *testing.T) {
+func TestGetZeros(t *testing.T) {
 	tcs := []struct {
 		desc        string
 		inputList   []string
 		expectedVal int
 	}{
 		{
-			desc: "expected distance 31",
+			desc: "expected final dial number 3",
 			inputList: []string{
-				"3   4",
-				"4   3",
-				"2   5",
-				"1   3",
-				"3   9",
-				"3   3",
+				"L68",
+				"L30",
+				"R48",
+				"L5",
+				"R60",
+				"L55",
+				"L1",
+				"L99",
+				"R14",
+				"L82",
 			},
-			expectedVal: 31,
+			expectedVal: 6,
 		},
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			got := getTotalSimilarityScore(tc.inputList)
+			got := getZeros(tc.inputList)
 			if diff := cmp.Diff(tc.expectedVal, got); diff != "" {
 				t.Errorf("sum has diff %s", diff)
 			}
