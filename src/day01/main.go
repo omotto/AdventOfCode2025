@@ -2,69 +2,73 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"path/filepath"
-	"sort"
 	"strconv"
 	"strings"
 
 	"advent2025/pkg/file"
 )
 
-func getNumLists(s []string) ([]int, []int) {
-	a := make([]int, len(s), len(s))
-	b := make([]int, len(s), len(s))
-	for idx, str := range s {
-		ss := strings.Split(str, "   ")
-		a[idx], _ = strconv.Atoi(ss[0])
-		b[idx], _ = strconv.Atoi(ss[1])
-	}
-	return a, b
-}
-
-func getTotalDistance(s []string) int {
-	// Get two list integer values from input
-	a, b := getNumLists(s)
-	// Sort them
-	sort.Slice(a, func(i, j int) bool { return a[i] < a[j] })
-	sort.Slice(b, func(i, j int) bool { return b[i] < b[j] })
-	// Get distance
-	result := 0
-	for c := 0; c < len(a); c++ {
-		d := math.Abs(float64(a[c]) - float64(b[c]))
-		result += int(d)
-	}
-	return result
-}
-
-func getTotalSimilarityScore(s []string) int {
-	// Get two list integer values from input
-	a, b := getNumLists(s)
-	// Create map to store num repeated times of the right column values
-	m := map[int]int{}
-	for _, v := range b {
-		if i, ok := m[v]; ok {
-			m[v] = i + 1
+func getFinalNumber(s []string) int {
+	zeros := 0
+	dialValue := 50 // initial dial value
+	for _, line := range s {
+		v, _ := strconv.Atoi(line[1:])
+		v = v % 100 // for higher numbers than 100
+		if strings.ToLower(string(line[0])) == "l" {
+			dialValue = dialValue - v
+			if dialValue < 0 {
+				dialValue = 100 + dialValue
+			}
 		} else {
-			m[v] = 1
+			dialValue = dialValue + v
+			if dialValue > 99 {
+				dialValue = dialValue - 100
+			}
+		}
+		if dialValue == 0 {
+			zeros += 1
 		}
 	}
-	// Calculate similarity score
-	result := 0
-	for _, v := range a {
-		d := 0
-		if i, ok := m[v]; ok {
-			d = v * i
+	return zeros
+}
+
+func getZeros(s []string) int {
+	zeros := 0
+	dialValue := 50 // initial dial value
+	for _, line := range s {
+		v, _ := strconv.Atoi(line[1:])
+		zeros = zeros + v/100
+		v = v % 100
+		if strings.ToLower(string(line[0])) == "l" {
+			dialValue = dialValue - v
+			if dialValue < 0 {
+				dialValue = 100 + dialValue
+				if dialValue+v != 100 {
+					zeros += 1
+				}
+			} else if dialValue == 0 {
+				zeros += 1
+			}
+		} else {
+			dialValue = dialValue + v
+			if dialValue > 99 {
+				dialValue = dialValue - 100
+				if dialValue-v != 0 {
+					zeros += 1
+				}
+			} else if dialValue == 0 {
+				zeros += 1
+			}
 		}
-		result += d
 	}
-	return result
+	return zeros
 }
 
 func main() {
 	absPathName, _ := filepath.Abs("src/day01/input.txt")
 	output, _ := file.ReadInput(absPathName)
 
-	fmt.Println(getTotalDistance(output))
-	fmt.Println(getTotalSimilarityScore(output))
+	fmt.Println(getFinalNumber(output))
+	fmt.Println(getZeros(output))
 }
