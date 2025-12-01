@@ -46,7 +46,7 @@ func TestGetZeros(t *testing.T) {
 		expectedVal int
 	}{
 		{
-			desc: "expected final dial number 3",
+			desc: "expected final dial number 6",
 			inputList: []string{
 				"L68",
 				"L30",
