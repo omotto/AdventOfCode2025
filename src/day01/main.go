@@ -10,17 +10,21 @@ import (
 )
 
 func getFinalNumber(s []string) int {
-	zeros := 0
-	dialValue := 50 // initial dial value
+	var (
+		zeros     = 0  // times to get zero value
+		dialValue = 50 // initial dial value
+		dir       byte // Left or Right
+		v         int
+	)
 	for _, line := range s {
-		v, _ := strconv.Atoi(line[1:])
-		v = v % 100 // for higher numbers than 100
-		if strings.ToLower(string(line[0])) == "l" {
+		_, _ = fmt.Sscanf(line, "%c%d", &dir, &v)
+		v = v % 100    // for higher numbers than 100
+		if dir == 76 { // ASCII value of L
 			dialValue = dialValue - v
 			if dialValue < 0 {
 				dialValue = 100 + dialValue
 			}
-		} else {
+		} else { // ASCII value of R is 82
 			dialValue = dialValue + v
 			if dialValue > 99 {
 				dialValue = dialValue - 100
@@ -34,11 +38,10 @@ func getFinalNumber(s []string) int {
 }
 
 func getZeros(s []string) int {
-	zeros := 0
-	dialValue := 50 // initial dial value
+	zeros, dialValue := 0, 50 // initial dial value
 	for _, line := range s {
 		v, _ := strconv.Atoi(line[1:])
-		zeros = zeros + v/100
+		zeros += v / 100
 		v = v % 100
 		if strings.ToLower(string(line[0])) == "l" {
 			dialValue = dialValue - v
