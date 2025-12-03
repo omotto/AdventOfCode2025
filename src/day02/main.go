@@ -18,12 +18,11 @@ func checkInvalid(str string) bool {
 func checkInvalid2(str string) bool {
 	for i := 0; i < len(str)/2; i++ {
 		invalid := true
+		if len(str)%(i+1) != 0 {
+			continue
+		}
 		for j := i + 1; j < len(str); j = j + i + 1 {
 			a := str[j-i-1 : j]
-			if j+i+1 > len(str) {
-				invalid = false
-				break
-			}
 			b := str[j : j+i+1]
 			if a != b {
 				invalid = false

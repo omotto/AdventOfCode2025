@@ -1,11 +1,12 @@
 package main
 
 import (
-	"advent2025/pkg/file"
 	"fmt"
 	"math"
 	"path/filepath"
 	"strconv"
+
+	"advent2025/pkg/file"
 )
 
 func getMaxJolage(bank []int, digits int) int {
