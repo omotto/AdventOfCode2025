@@ -1,9 +1,10 @@
 package main
 
 import (
-	"advent2025/pkg/file"
 	"fmt"
 	"path/filepath"
+
+	"advent2025/pkg/file"
 )
 
 func getSumRolls(s []string) int {
