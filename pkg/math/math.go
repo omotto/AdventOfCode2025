@@ -1,6 +1,6 @@
 package math
 
-// GCD Greatest Common Divison via euclidean algorithm
+// GCD Greatest Common Division via Euclidean algorithm
 func GCD(a, b int) int {
 	for b != 0 {
 		t := b
