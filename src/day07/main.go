@@ -35,19 +35,15 @@ func getNumSplits(s []string) int {
 	return total
 }
 
-func recursive(s []string, x, y int, cache map[string]int) int {
-	if y == len(s) {
-		return 1
-	} else {
-		for ; y < len(s); y++ {
-			if s[y][x] == '^' {
-				if v, ok := cache[fmt.Sprintf("%d,%d", x, y)]; ok {
-					return v
-				} else {
-					v = recursive(s, x-1, y, cache) + recursive(s, x+1, y, cache)
-					cache[fmt.Sprintf("%d,%d", x, y)] = v
-					return v
-				}
+func recursive(s []string, x, y int, cache map[struct{ x, y int }]int) int {
+	for ; y < len(s); y++ {
+		if s[y][x] == '^' {
+			if v, ok := cache[struct{ x, y int }{x, y}]; ok {
+				return v
+			} else {
+				v = recursive(s, x-1, y, cache) + recursive(s, x+1, y, cache)
+				cache[struct{ x, y int }{x, y}] = v
+				return v
 			}
 		}
 	}
@@ -55,11 +51,9 @@ func recursive(s []string, x, y int, cache map[string]int) int {
 }
 
 func getTimelines(s []string) int {
-	total := 0
 	y, x := 0, strings.Index(s[0], "S")
-	cache := make(map[string]int)
-	total += recursive(s, x, y, cache)
-	return total
+	cache := make(map[struct{ x, y int }]int)
+	return recursive(s, x, y, cache)
 }
 
 func main() {
