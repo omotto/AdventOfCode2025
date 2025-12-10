@@ -120,7 +120,7 @@ func getFinalJoltage(joltages string) []int {
 func getMinCombinations2(_ string, buttons []string, joltages string) int {
 	finalJoltage := getFinalJoltage(joltages)
 	intButtons := getButtons(buttons)
-	const maxPresses = 1000 // adjust as needed
+	const maxClicks = 1000 // adjust as needed
 	numJoltages := len(finalJoltage)
 	lp := golp.NewLP(0, len(intButtons))
 	lp.SetVerboseLevel(golp.NEUTRAL)
@@ -128,7 +128,7 @@ func getMinCombinations2(_ string, buttons []string, joltages string) int {
 	for i := 0; i < len(intButtons); i++ {
 		objectiveCoeffs[i] = 1.0
 		lp.SetInt(i, true)
-		lp.SetBounds(i, 0.0, float64(maxPresses))
+		lp.SetBounds(i, 0.0, float64(maxClicks))
 	}
 	lp.SetObjFn(objectiveCoeffs)
 	for i := 0; i < numJoltages; i++ {
