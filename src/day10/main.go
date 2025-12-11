@@ -94,7 +94,7 @@ func getMinCombinations(lights string, buttons []string, _ string) int {
 	return -1
 }
 
-func getFewestButtonPresses(s []string) int {
+func getFewestButtonClicks(s []string) int {
 	sum := 0
 	for _, line := range s {
 		parts := strings.Split(line, " ")
@@ -155,7 +155,7 @@ func getMinCombinations2(_ string, buttons []string, joltages string) int {
 	return clicks
 }
 
-func getFewestButtonPresses2(s []string) int {
+func getFewestButtonClicks2(s []string) int {
 	sum := 0
 	for _, line := range s {
 		parts := strings.Split(line, " ")
@@ -171,6 +171,6 @@ func main() {
 	absPathName, _ := filepath.Abs("src/day10/input.txt")
 	output, _ := file.ReadInput(absPathName)
 
-	fmt.Println(getFewestButtonPresses(output))
-	fmt.Println(getFewestButtonPresses2(output))
+	fmt.Println(getFewestButtonClicks(output))
+	fmt.Println(getFewestButtonClicks2(output))
 }

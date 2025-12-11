@@ -6,7 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestGetFewestButtonPresses(t *testing.T) {
+func TestGetFewestButtonClicks(t *testing.T) {
 	tcs := []struct {
 		desc        string
 		inputList   []string
@@ -24,7 +24,7 @@ func TestGetFewestButtonPresses(t *testing.T) {
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			got := getFewestButtonPresses(tc.inputList)
+			got := getFewestButtonClicks(tc.inputList)
 			if diff := cmp.Diff(tc.expectedVal, got); diff != "" {
 				t.Errorf("sum has diff %s", diff)
 			}
@@ -32,7 +32,7 @@ func TestGetFewestButtonPresses(t *testing.T) {
 	}
 }
 
-func TestGetFewestButtonPresses2(t *testing.T) {
+func TestGetFewestButtonClicks2(t *testing.T) {
 	tcs := []struct {
 		desc        string
 		inputList   []string
@@ -50,7 +50,7 @@ func TestGetFewestButtonPresses2(t *testing.T) {
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			got := getFewestButtonPresses2(tc.inputList)
+			got := getFewestButtonClicks2(tc.inputList)
 			if diff := cmp.Diff(tc.expectedVal, got); diff != "" {
 				t.Errorf("sum has diff %s", diff)
 			}
