@@ -81,14 +81,14 @@ func getMinCombinations(lights string, buttons []string, _ string) int {
 				} else {
 					newState[button[i]] = 0
 				}
-				if _, ok := visited[fmt.Sprint(newState)]; ok {
-					continue
-				}
-				queue = append(queue, Tuple{
-					state:  newState,
-					clicks: tile.clicks + 1,
-				})
 			}
+			if _, ok := visited[fmt.Sprint(newState)]; ok {
+				continue
+			}
+			queue = append(queue, Tuple{
+				state:  newState,
+				clicks: tile.clicks + 1,
+			})
 		}
 	}
 	return -1
@@ -133,18 +133,16 @@ func getMinCombinations2(_ string, buttons []string, joltages string) int {
 	lp.SetObjFn(objectiveCoeffs)
 	for i := 0; i < numJoltages; i++ {
 		var entries []golp.Entry
-		for j, btn := range intButtons {
-			if slices.Contains(btn, i) {
+		for j, button := range intButtons {
+			if slices.Contains(button, i) {
 				entries = append(entries, golp.Entry{Col: j, Val: 1.0})
 			}
 		}
-		targetValue := float64(finalJoltage[i])
-		if err := lp.AddConstraintSparse(entries, golp.EQ, targetValue); err != nil {
+		if err := lp.AddConstraintSparse(entries, golp.EQ, float64(finalJoltage[i])); err != nil {
 			panic(err)
 		}
 	}
-	status := lp.Solve()
-	if status != golp.OPTIMAL {
+	if lp.Solve() != golp.OPTIMAL {
 		return 0
 	}
 	solution := lp.Variables()
