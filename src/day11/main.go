@@ -53,15 +53,15 @@ func recursive2(values map[string][]string, input, end string, fft, dac bool, vi
 		}
 		return 0
 	}
+	isfft, isdac := fft, dac
+	if input == "fft" {
+		isfft = true
+	}
+	if input == "dac" {
+		isdac = true
+	}
 	paths := 0
 	for _, output := range outputs {
-		isfft, isdac := fft, dac
-		if input == "fft" {
-			isfft = true
-		}
-		if input == "dac" {
-			isdac = true
-		}
 		paths += recursive2(values, output, end, isfft, isdac, visited)
 	}
 	visited[State{fmt.Sprintf("%s:%s", input, outputs), fft, dac}] = paths
