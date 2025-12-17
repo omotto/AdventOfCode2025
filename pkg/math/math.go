@@ -1,5 +1,9 @@
 package math
 
+import (
+	"math"
+)
+
 // GCD Greatest Common Division via Euclidean algorithm
 func GCD(a, b int) int {
 	for b != 0 {
@@ -35,4 +39,14 @@ func SystemLinearEq2x2(matrix [2][3]int) (float64, float64) {
 	x := float64(c*e-f*b) / float64(a*e-d*b)
 	y := float64(f*a-c*d) / float64(a*e-d*b)
 	return x, y
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
+}
+
+// ToFixed truncate float64 type to a particular precision
+func ToFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
 }
